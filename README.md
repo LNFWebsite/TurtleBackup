@@ -16,9 +16,9 @@ If you've ever wanted to backup all your important files to a cloud service like
 
 So, you'd probably start out by moving all your files to a single directory, encrypting that directory, and uploading...
 
-But then you'd realize that, by encrypting your files, the uploader which you have chosen would not be able to recognize that your files didn't change, because... they did change... They were encrypted.
+After the first encryption you'd realize that, by encrypting your files, the uploader which you have chosen would not be able to recognize that your files didn't change, because... they did change... They were re-encrypted.
 
-On top of this, for any single file change, the entire backup would have to be re-uploaded, which is dumb and wasteful.
+On top of this, for any single file change, the entire backup would have to be re-encrypted and re-uploaded, which is dumb and wasteful.
 
 So you go back to the drawing board...
 
