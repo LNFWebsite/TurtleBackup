@@ -98,3 +98,7 @@ sudo bash /path/to/TurtleBackup/decrypt.sh
 ```
 
 Voila! You're files should be placed in the directory specified in the script, with preserved file paths, filenames, and permissions.
+
+## License
+
+TurtleBackup is licensed under the Apache 2.0 License (Apache).
