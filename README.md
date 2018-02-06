@@ -42,7 +42,7 @@ Installing TurtleBackup is simple!
 
 #### Backup Engine
 
-First, install your backup engine. TurtleBackup works with https://github.com/odeke-em/drive out of the box, making backups to Google Drive, so let's do that:
+First, install your backup engine. TurtleBackup works with [https://github.com/odeke-em/drive](https://github.com/odeke-em/drive) out of the box, making backups to Google Drive, so let's do that:
 
 [Installing Drive](https://github.com/odeke-em/drive#installing)
 
