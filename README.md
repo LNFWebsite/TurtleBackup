@@ -101,4 +101,4 @@ Voila! You're files should be placed in the directory specified in the script, w
 
 ## License
 
-TurtleBackup is licensed under the Apache 2.0 License (Apache).
+Licensed to LNFWebsite under one or more contributor license agreements; and to You under the Apache License, Version 2.0.
