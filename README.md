@@ -6,7 +6,7 @@ Make simple, encrypted backups to your cloud of choice
 
 ## Description
 
-If you've ever wanted to backup all your important files to a cloud service like Google Drive, but didn't like the idea of them having access to your files, you probably would wind up writing some sort of script to automate encrypting and uploading your files.
+If you've ever wanted to backup all your important files to a cloud service like Google Drive but wanted to encrypt them on your own for added safety, you probably would wind up writing some sort of script to automate encrypting and uploading your files.
 
 So, you'd probably start out by moving all your files to a single directory, encrypting that directory, and uploading...
 
