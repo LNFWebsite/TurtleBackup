@@ -55,7 +55,7 @@ sudo apt-get install drive
 Great, now either clone or download TurtleBackup into your directory of choice:
 
 ```
-git clone TURTLEBACKUP
+git clone https://github.com/LNFWebsite/TurtleBackup.git
 ```
 
 And edit the configuration parameters at the top of the script:
