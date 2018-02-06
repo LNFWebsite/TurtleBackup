@@ -50,6 +50,12 @@ sudo apt-get update
 sudo apt-get install drive
 ```
 
+Once installed, you have to [initialize](https://github.com/odeke-em/drive#initializing) a directory to act as the main Google Drive directory on your system. During this process, you'll allow `drive` to access your Google Drive:
+
+```
+drive init ~/gdrive
+```
+
 #### Clone TurtleBackup
 
 Great, now either clone or download TurtleBackup into your directory of choice:
