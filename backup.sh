@@ -170,8 +170,8 @@ echo $'\n'"Deleting any empty directories from backups...";
 #delete all empty directories in backup and stat, at this point the backups are ready to be uploaded
 `find ${BACKUP_LOCATION} ${STAT_FILES_LOCATION} -type d -empty -delete`
 
-echo "Done! Files were encrypted and stored in the backups. Now starting Google Drive upload...";
-#finally, backup all of the encrypted files to Google Drive
+echo "Done! Files were encrypted and stored in the backups. Now starting upload...";
+#finally, upload all of the encrypted files
 eval "${BACKUP_ENGINE_CMDS}"
 echo "TurtleBackup is complete!";
 
