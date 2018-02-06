@@ -60,7 +60,7 @@ git clone https://github.com/LNFWebsite/TurtleBackup.git
 
 And edit the configuration parameters at the top of the script:
 
-***CODE WINDOW HERE***
+![2](https://raw.githubusercontent.com/LNFWebsite/TurtleBackup/master/examples/2.jpg)
 
 Terrific, now you're ready for your first backup!
 
