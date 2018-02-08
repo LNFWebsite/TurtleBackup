@@ -70,7 +70,7 @@ Great, now either clone or download TurtleBackup into your directory of choice:
 git clone https://github.com/LNFWebsite/TurtleBackup.git
 ```
 
-And edit the configuration parameters at the top of the script:
+And edit the configuration parameters at the top of the `backup.sh` script:
 
 ![2](https://raw.githubusercontent.com/LNFWebsite/TurtleBackup/master/examples/2.jpg)
 
