@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copyright 2018 LNFWebsite
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,6 +38,8 @@ DIRS_TO_BACKUP="/example/directory/to/backup/ /another/example/directory/"
 ROOT_DIRECTORY="/home/my_username/gdrive"
 # Enter the subdirectory to put backup files in the root directory of your uploader (no trailing slash, will create if directory non-existent)
 BACKUP_LOCATION="${ROOT_DIRECTORY}/backup"
+# (Optional): Uncomment and enter regex to match files/directories which should be skipped during backup
+#SKIP_IF_MATCH_REGEX="^\/some\/regex\/.+$"
 # What command to run in order to upload (uses drive by default)
 BACKUP_ENGINE_CMDS="cd \"${BACKUP_LOCATION}\"; drive push -no-prompt;"
 ################################################################################ That's it!
@@ -80,50 +83,66 @@ ORIGIN_COMPARE=""
 #list all files within all directories and loop through them (https://unix.stackexchange.com/a/9499)
 while IFS= read -r -d '' FILE_TO_CHECK;
 do
-  #encrypt all directory and file names with sha256 hash (needs to be unchanging relative to actual names, is not decrypted because tar includes original filenames and paths for uncompression)
-  ENCRYPTED_PATH=$(encrypt_path "${FILE_TO_CHECK}")
-
-  #specify the location of the backups
-  ENC_FILE="${BACKUP_LOCATION}${ENCRYPTED_PATH}"
-  ENC_FILE_DIR=$(dirname "${ENC_FILE}");
-  #specify the location of the stat files
-  OLD_STAT_FILE="${STAT_FILES_LOCATION}${ENCRYPTED_PATH}.txt"
-  STAT_FILE_DIR=$(dirname "${OLD_STAT_FILE}");
-
-  #append the path of this file to the ORIGIN_COMPARE variable
-  ORIGIN_COMPARE="${ORIGIN_COMPARE}"$'\n'"${ENC_FILE}${ENC_FILE_EXTENSION}"
-
-  #if the stat file directory does not exist, create it
-  if [ ! -d $STAT_FILE_DIR ]
+  SKIP_FILE=false
+  #if regex set
+  if [ ! -z ${SKIP_IF_MATCH_REGEX} ]
   then
-    `mkdir -p "${STAT_FILE_DIR}"`
-  fi
-  #if the stat file exists, read its contents into OLD_STAT
-  if [ -e ${OLD_STAT_FILE} ]
-  then
-    OLD_STAT=`cat "${OLD_STAT_FILE}"`
-  else
-    OLD_STAT="nothing"
-  fi
-
-  #run the stat command to store the last time this file has been edited
-  NEW_STAT=`stat -c '%y' "${FILE_TO_CHECK}"`
-
-  #if the file has changed as evident by the differing stat results to the old stat file
-  if [ "${OLD_STAT}" != "${NEW_STAT}" ]
-  then
-    echo $'\n'"File ${FILE_TO_CHECK} has changed. Encrypting and backing up...";
-    #if the path which the encrypted file will be in does not exist, make it
-    if [ ! -d ${ENC_FILE_DIR} ]
+    #check file against the regex
+    if [[ $FILE_TO_CHECK =~ $SKIP_IF_MATCH_REGEX ]]
     then
-      `mkdir -p "${ENC_FILE_DIR}"`
+      SKIP_FILE=true
     fi
-    #create a compressed and encrypted backup file in the same directory structure (hashed now), except, in the backup folder
-    tar cz -C / "${FILE_TO_CHECK#"/"}" | openssl enc -aes-256-cbc -pass pass:${PASSWORD} -e > "${ENC_FILE}${ENC_FILE_EXTENSION}";
-    # update the OLD_STAT_FILE
-    echo "${NEW_STAT}" > "${OLD_STAT_FILE}";
+  fi
+  #if this file was not specified to be ignored by SKIP_IF_MATCH_REGEX
+  if [ "${SKIP_FILE}" = false ]
+  then
+    #encrypt all directory and file names with sha256 hash (needs to be unchanging relative to actual names, is not decrypted because tar includes original filenames and paths for uncompression)
+    ENCRYPTED_PATH=$(encrypt_path "${FILE_TO_CHECK}")
+
+    #specify the location of the backups
+    ENC_FILE="${BACKUP_LOCATION}${ENCRYPTED_PATH}"
+    ENC_FILE_DIR=$(dirname "${ENC_FILE}");
+    #specify the location of the stat files
+    OLD_STAT_FILE="${STAT_FILES_LOCATION}${ENCRYPTED_PATH}.txt"
+    STAT_FILE_DIR=$(dirname "${OLD_STAT_FILE}");
+
+    #append the path of this file to the ORIGIN_COMPARE variable
+    ORIGIN_COMPARE="${ORIGIN_COMPARE}"$'\n'"${ENC_FILE}${ENC_FILE_EXTENSION}"
+
+    #if the stat file directory does not exist, create it
+    if [ ! -d $STAT_FILE_DIR ]
+    then
+      `mkdir -p "${STAT_FILE_DIR}"`
+    fi
+    #if the stat file exists, read its contents into OLD_STAT
+    if [ -e ${OLD_STAT_FILE} ]
+    then
+      OLD_STAT=`cat "${OLD_STAT_FILE}"`
+    else
+      OLD_STAT="nothing"
+    fi
+
+    #run the stat command to store the last time this file has been edited
+    NEW_STAT=`stat -c '%y' "${FILE_TO_CHECK}"`
+
+    #if the file has changed as evident by the differing stat results to the old stat file
+    if [ "${OLD_STAT}" != "${NEW_STAT}" ]
+    then
+      echo $'\n'"File ${FILE_TO_CHECK} has changed. Encrypting and backing up...";
+      #if the path which the encrypted file will be in does not exist, make it
+      if [ ! -d ${ENC_FILE_DIR} ]
+      then
+        `mkdir -p "${ENC_FILE_DIR}"`
+      fi
+      #create a compressed and encrypted backup file in the same directory structure (hashed now), except, in the backup folder
+      tar cz -C / "${FILE_TO_CHECK#"/"}" | openssl enc -aes-256-cbc -pass pass:${PASSWORD} -e > "${ENC_FILE}${ENC_FILE_EXTENSION}";
+      # update the OLD_STAT_FILE
+      echo "${NEW_STAT}" > "${OLD_STAT_FILE}";
+    else
+      echo -n ".";
+    fi
   else
-    echo -n ".";
+    echo $'\n'"File ${FILE_TO_CHECK} skipped.";
   fi
 done < <(find ${DIRS_TO_BACKUP} -type f -print0)
 
