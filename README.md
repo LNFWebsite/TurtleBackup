@@ -83,7 +83,7 @@ Terrific, now you're ready for your first backup!
 To backup and upload your files, just run the following in a terminal or in a Cron job:
 
 ```
-sudo bash /path/to/TurtleBackup/backup.sh
+sudo /path/to/TurtleBackup/backup.sh
 ```
 
 #### Download and Decrypt
@@ -94,7 +94,7 @@ To download and decrypt your backups, take a glance at the `decrypt.sh` script, 
 cd /path/to/where/you/want/the/encrypted/backups
 drive pull # or whatever you use to download your backups
 
-sudo bash /path/to/TurtleBackup/decrypt.sh
+sudo /path/to/TurtleBackup/decrypt.sh
 ```
 
 Voila! You're files should be placed in the directory specified in the script, with preserved file paths, filenames, and permissions.
