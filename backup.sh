@@ -142,7 +142,7 @@ do
       echo -n ".";
     fi
   else
-    echo $'\n'"File ${FILE_TO_CHECK} skipped.";
+    echo -n "s";
   fi
 done < <(find ${DIRS_TO_BACKUP} -type f -print0)
 
