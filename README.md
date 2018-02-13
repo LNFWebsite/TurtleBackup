@@ -67,7 +67,14 @@ drive init ~/gdrive
 Great, now either clone or download TurtleBackup into your directory of choice:
 
 ```
+cd /directory/of/choice
 git clone https://github.com/LNFWebsite/TurtleBackup.git
+```
+
+Give the `backup.sh` and `decrypt.sh` files executable permissions:
+
+```
+chmod u+x /directory/of/choice/TurtleBackup/backup.sh /directory/of/choice/TurtleBackup/decrypt.sh
 ```
 
 And edit the configuration parameters at the top of the `backup.sh` script:
