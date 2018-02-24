@@ -1,6 +1,6 @@
 # TurtleBackup
 
-Make simple, encrypted backups to your cloud of choice.
+Make simple, compressed and encrypted backups to your cloud of choice.
 
 ![1](https://raw.githubusercontent.com/LNFWebsite/TurtleBackup/master/examples/1.jpg)
 
