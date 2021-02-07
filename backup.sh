@@ -135,7 +135,7 @@ do
         `mkdir -p "${ENC_FILE_DIR}"`
       fi
       #create a compressed and encrypted backup file in the same directory structure (hashed now), except, in the backup folder
-      tar cz -C / "${FILE_TO_CHECK#"/"}" | openssl enc -aes-256-cbc -pbkdf2 -pass pass:${PASSWORD} -e > "${ENC_FILE}${ENC_FILE_EXTENSION}";
+      tar cz -C / "${FILE_TO_CHECK#"/"}" | openssl enc -aes-256-cbc -pbkdf2 -salt -pass pass:${PASSWORD} -e > "${ENC_FILE}${ENC_FILE_EXTENSION}";
       # update the OLD_STAT_FILE
       echo "${NEW_STAT}" > "${OLD_STAT_FILE}";
     else
