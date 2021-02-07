@@ -48,7 +48,7 @@ do
   fi
   #unencrypt and uncompress!
   cd ${DIR_TO_PUT}
-  openssl enc -aes-256-cbc -pass pass:${PASSWORD} -d -in ${FILE_TO_CHECK} | tar xz;
+  openssl enc -aes-256-cbc -pbkdf2 -salt -pass pass:${PASSWORD} -d -in ${FILE_TO_CHECK} | tar xz;
 done
 echo "TurtleBackup decryption is complete!";
 
